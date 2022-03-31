@@ -27,7 +27,10 @@ class StoreAuthorsRequest extends FormRequest
 	public function rules () : Array
 	{
 		return [
-			#
+			"name"			=> [ "bail", "nullable", "string", "between:3,190" ],
+			"nationality"	=> [ "bail", "nullable", "string", "between:3,190" ],
+			"gender"		=> [ "bail", "nullable", Rule::in( [ 'M', 'F', 'O' ] ) ],
+			"date_of_birth"	=> [ "bail", "nullable", "date", "before:today" ]
 		];
 	}
 

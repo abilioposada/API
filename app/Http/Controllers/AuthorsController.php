@@ -33,34 +33,34 @@ class AuthorsController extends Controller
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param \App\Models\Authors $authors
+	 * @param \App\Models\Authors $author
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show ( Authors $authors )
+	public function show ( Authors $author )
 	{
-		return new AuthorsResource( $authors );
+		return new AuthorsResource( $author );
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
 	 * @param \App\Http\Requests\UpdateAuthorsRequest $request
-	 * @param \App\Models\Authors $authors
+	 * @param \App\Models\Authors $author
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update ( UpdateAuthorsRequest $request, Authors $authors )
+	public function update ( UpdateAuthorsRequest $request, Authors $author )
 	{
-		return $authors->update( $request->validated() );
+		return $author->update( $request->validated() );
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param \App\Models\Authors $authors
+	 * @param \App\Models\Authors $author
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy ( Authors $authors )
+	public function destroy ( Authors $author )
 	{
-		return $authors->delete();
+		return $author->delete();
 	}
 }
