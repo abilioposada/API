@@ -13,6 +13,6 @@ class {{ class }} extends Seeder
 	 */
 	public function run () : void
 	{
-		#
+		# ModelClass::factory( 10 )->create();
 	}
 }

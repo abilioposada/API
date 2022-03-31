@@ -2,7 +2,10 @@
 
 namespace {{ namespace }};
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class {{ class }} extends FormRequest
 {
@@ -13,7 +16,7 @@ class {{ class }} extends FormRequest
 	 */
 	public function authorize () : Bool
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -26,5 +29,19 @@ class {{ class }} extends FormRequest
 		return [
 			#
 		];
+	}
+
+	/**
+	 * Handle a failed validation attempt.
+	 *
+	 * @param \Illuminate\Contracts\Validation\Validator $validator
+	 * @return void
+	 *
+	 * @throws \Illuminate\Http\Exceptions\HttpResponseException
+	 */
+	protected function failedValidation ( Validator $validator ) : void
+	{
+		# Returns a JSON format response code 422 Unprocessable Entity exception
+		throw new HttpResponseException( response()->json( $validator->errors(), 422 ) );
 	}
 }
