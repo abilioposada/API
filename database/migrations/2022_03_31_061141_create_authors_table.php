@@ -16,6 +16,21 @@ class CreateAuthorsTable extends Migration
 		Schema::create( "authors", function ( Blueprint $tbl )
 			{
 				$tbl->id();
+
+				$tbl->string( "name" )
+					->default( "Anonym" );
+
+				$tbl->string( "nationality" )
+					->default( "Unknown" );
+
+				$tbl->enum( $column = "gender", $allowed = [ 'M', 'F', 'O' ] )
+					->comment( "Male, Female, Other" )
+					->default( 'O' );
+
+				$tbl->date( "date_of_birth" )
+					->nullable()
+					->default( null );
+
 				$tbl->timestamps();
 			}
 		);
