@@ -12,7 +12,7 @@ use Tests\TestCase;
  */
 class AuthorsTest extends TestCase
 {
-	private const BASE_URI = '/'; # Base URI endpoint to test
+	private const BASE_URI = "/api/authors/"; # Base URI endpoint to test
 
 	/**
 	 * Get resources with pagination and test the structure
@@ -50,7 +50,7 @@ class AuthorsTest extends TestCase
 	 */
 	public function testFailedCreateOne () : void
 	{
-		$response = $this->post( self::BASE_URI );
+		$response = $this->post( self::BASE_URI, [ "name" => "Ab" ] );
 
 		$response->assertStatus( 422 );
 	}
@@ -62,25 +62,25 @@ class AuthorsTest extends TestCase
 	 */
 	public function testCreateOne () : Array
 	{
-		$attribute	= "Test attribute";
-		$response	= $this->post( self::BASE_URI, [ "attribute" => $attribute ] );
+		$test		= "Test";
+		$response	= $this->post( self::BASE_URI, [ "name" => $test ] );
 
 		$response
 			->assertCreated()
 			->assertJsonStructure(
 				[
-					"data" => [ "id", "attribute" ]
+					"data" => [ "id", "updated_at", "created_at" ]
 				]
 			)
 			->assertJson(
 				[
-					"data" => [ "attribute" => $attribute ]
+					"data" => [ "name" => $test ]
 				]
 			);
 
 		return [
-			"id"		=> $response[ "data" ][ "id" ],
-			"attribute"	=> $attribute
+			"id"	=> $response[ "data" ][ "id" ],
+			"name"	=> $test
 		];
 	}
 
@@ -99,12 +99,12 @@ class AuthorsTest extends TestCase
 			->assertOk()
 			->assertJsonStructure(
 				[
-					"data" => [ "id", "attribute" ]
+					"data" => [ "id", "name" ]
 				]
 			)
 			->assertJson(
 				[
-					"data" => [ "attribute" => $data[ "attribute" ] ]
+					"data" => [ "name" => $data[ "name" ] ]
 				]
 			);
 		
@@ -120,7 +120,7 @@ class AuthorsTest extends TestCase
 	 */
 	public function testUpdateOne ( $id ) : void
 	{
-		$response = $this->put( self::BASE_URI . $id, [ "attribute" => "Test attribute change" ] );
+		$response = $this->put( self::BASE_URI . $id, [ "name" => "Test 2" ] );
 
 		$response->assertOk(); # Response OK 200
 
